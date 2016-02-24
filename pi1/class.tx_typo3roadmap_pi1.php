@@ -245,9 +245,10 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
 			"startDateField": "start",
 			"endDateField": "end",
 			"dataProvider": ' . json_encode($data) . ',
-//			"valueScrollbar": {
-//				"autoGridCount": true
-//			},
+			"valueScrollbar": {
+				"autoGridCount": true,
+				"color": "#555555"
+			},
 			"chartCursor": {
 				"cursorColor": "#55bb76",
 				"valueBalloonsEnabled": false,
