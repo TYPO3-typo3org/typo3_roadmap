@@ -1,0 +1,42 @@
+
+<h3>Charts</h3>
+<div id="charts" style="height: 300px;"></div>
+
+<div class="b-tabs">
+	<ul class="tabs lite-tabs">
+		<f:for each="{majors}" as="majorsTabs" key="keyTab" iteration="tabIteratorTabs">
+			<li class="{f:if(condition: tabIteratorTabs.isFirst, then: 'act')}"><a href="#{ceUid}_{keyTab}">{majorsTabs.title}</a></li>
+		</f:for>
+	</ul>
+	<div class="tab-panes">
+		<f:for each="{majors}" as="major" key="key" iteration="tabIterator">
+			<a id="{ceUid}_{keyTab}"></a>
+			<div class="tab-content {f:if(condition: tabIterator.isFirst, then: 'lite-tab-panes-black show-tab', else: 'hide-tab')}">
+				<f:format.html>{major.bodytext}</f:format.html>
+			</div>
+			<h3>Releases</h3>
+			<table class="contenttable-0">
+				<thead>
+				<tr>
+					<th scope="col">Version</th>
+					<th scope="col">Primary Focus</th>
+					<th scope="col">Estimated Release</th>
+				</tr>
+				</thead>
+				<tbody>
+				<f:for each="{major.minorversions}" as="minor">
+					<tr>
+						<td>{minor.version}</td>
+						<td>{minor.focus}</td>
+						<td>{minor.released}</td>
+					</tr>
+				</f:for>
+				</tbody>
+			</table>
+		</f:for>
+	</div>
+</div>
+
+<h3>PHP Compatibility Chart</h3>
+<f:format.html>{phpTable}</f:format.html>
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'typo3_roadmap'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_typo3roadmap_majorversion">Roadmap Major Version</label>
+			<label index="tx_typo3roadmap_majorversion.title">Title</label>
+			<label index="tx_typo3roadmap_majorversion.bodytext">Description</label>
+			<label index="tx_typo3roadmap_majorversion.regularsupport">Regular Support ends</label>
+			<label index="tx_typo3roadmap_majorversion.prioritysupport">Priority Support Ends</label>
+			<label index="tx_typo3roadmap_majorversion.extendedsupport">Extended Support Ends</label>
+			<label index="tx_typo3roadmap_majorversion.phpversions">Supported PHP Versions</label>
+			<label index="tx_typo3roadmap_minorversion">Roadmap Minor Version</label>
+			<label index="tx_typo3roadmap_minorversion.version">Version No.</label>
+			<label index="tx_typo3roadmap_minorversion.link">Link to release notes</label>
+			<label index="tx_typo3roadmap_minorversion.focus">Focus</label>
+			<label index="tx_typo3roadmap_minorversion.estimated">Estimated Release</label>
+			<label index="tx_typo3roadmap_minorversion.released">Released on</label>
+			<label index="tx_typo3roadmap_minorversion.parent">parent</label>
+			<label index="tx_typo3roadmap_phpversion">Roadmap PHP Version</label>
+			<label index="tx_typo3roadmap_phpversion.version">Version No.</label>
+			<label index="tx_typo3roadmap_phpversion.activesupport">Active Support Ends</label>
+			<label index="tx_typo3roadmap_phpversion.securitysupport">Security Support Ends</label>
+			<label index="tt_content.list_type_pi1">TYPO3 Roadmap</label>
+		</languageKey>
+	</data>
+</T3locallang>
