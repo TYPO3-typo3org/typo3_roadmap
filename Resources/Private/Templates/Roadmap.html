@@ -1,4 +1,4 @@
-
+{namespace roadmap=Tx_Typo3Roadmap_ViewHelpers}
 <h3>Charts</h3>
 <div id="charts" style="height: 300px;"></div>
 
@@ -38,5 +38,38 @@
 </div>
 
 <h3>PHP Compatibility Chart</h3>
-<f:format.html>{phpTable}</f:format.html>
-
+<table border="1">
+	<thead>
+		<tr>
+			<th>PHP versions</th>
+			<f:for each="{majorVersions}" as="majorVersion">
+				<th>
+					<strong>TYPO3 {majorVersion.title}</strong><br>
+					{f:format.date(date:majorVersion.developmentstart,format:'Y')}
+					- {f:format.date(date:majorVersion.regularsupport,format:'Y')}
+				</th>
+			</f:for>
+		</tr>
+	</thead>
+	<tbody>
+		<f:for each="{phpVersions}" as="phpVersion">
+			<tr>
+				<td>
+					PHP {phpVersion.version}
+				</td>
+				<f:for each="{majorVersions}" as="majorVersion">
+					<td>
+						<roadmap:condition.inArray needle="{phpVersion.uid}" array="{majorVersion.phpVersions}" arrayPath="uid">
+							<f:then>
+								yes
+							</f:then>
+							<f:else>
+								no
+							</f:else>
+						</roadmap:condition.inArray>
+					</td>
+				</f:for>
+			</tr>
+		</f:for>
+	</tbody>
+</table>

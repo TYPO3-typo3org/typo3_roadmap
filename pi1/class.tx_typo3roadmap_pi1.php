@@ -79,15 +79,17 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
         $this->pi_loadLL();
         $this->initializeView();
         $this->db = $GLOBALS['TYPO3_DB'];
-        $this->pageRenderer = $GLOBALS['TSFE']->getPageRenderer();
+        $this->pageRenderer = $this->getFrontendController()->getPageRenderer();
 
         $majorVersions = $this->getMajorVersions();
+        $phpVersions = $this->getAllAvailablePHPVersions();
+
         $this->renderCharts($majorVersions);
 
         $this->view->assign('majors', $majorVersions);
         $this->view->assign('ceUid', $this->cObj->data['uid']);
-        $this->view->assign('phpTable', $this->renderPHPCompatibilityMatrix($this->getAllAvailablePHPVersions(), $majorVersions));
-
+        $this->view->assign('phpVersions', $phpVersions);
+        $this->view->assign('majorVersions', $majorVersions);
 
         $content .= $this->view->render();
 
@@ -118,6 +120,11 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
             'sorting'
         );
         foreach ($rows as $index => $singleRow) {
+            foreach ($singleRow as $fieldName => $fieldValue) {
+                if (t3lib_div::testInt($fieldValue)) {
+                    $rows[$index][$fieldName] = (int)$fieldValue;
+                }
+            }
             $rows[$index]['minorversions'] = $this->getMinorVersions($singleRow['uid']);
             $rows[$index]['phpVersions'] = $this->getSupportedPHPVersions($singleRow['uid']);
         }
@@ -144,6 +151,10 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
         return $rows;
     }
 
+    /**
+     * @param int $majorVersion
+     * @return array
+     */
     protected function getSupportedPHPVersions($majorVersion)
     {
         $rows = $this->db->exec_SELECTgetRows(
@@ -344,6 +355,13 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
         return $data;
     }
 
+    /**
+     * @param array $allVersions
+     * @param array $majorVersions
+     * @return string
+     *
+     * @deprecated Not used anymore
+     */
     protected function renderPHPCompatibilityMatrix(array $allVersions, array $majorVersions)
     {
         $content = '<table border="1">';
@@ -354,6 +372,14 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
         $content .= '</tr>';
         $content .= '</table>';
         return $content;
+    }
+
+    /**
+     * @return tslib_fe
+     */
+    protected function getFrontendController()
+    {
+        return $GLOBALS['TSFE'];
     }
 
 }
