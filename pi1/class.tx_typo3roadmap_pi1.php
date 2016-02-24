@@ -197,6 +197,7 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
         $this->view->assign('data', $data);
         $chartJs = '
         AmCharts.useUTC = true;
+        var today = new Date();
 		var chart = AmCharts.makeChart("charts", {
 			"type": "gantt",
 			"theme": "light",
@@ -208,7 +209,19 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
 			"valueAxis": {
 				"type": "date",
 				"autoGridCount": false,
-				"gridCount": 24
+				"gridCount": 24,
+				"guides": [
+				    {
+					"value": today,
+					"toValue": today,
+					"lineAlpha": 1,
+					"lineThickness": 1,
+					"inside": true,
+					"labelRotation": 90,
+					"label": "Today",
+					"above": true
+				    }
+				]
 			},
 			"graph": {
 				"fillAlphas": 1,
