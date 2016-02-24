@@ -50,8 +50,8 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
         'regular' => '#69A550',
         'security' => '#FF8700',
         'elts' => '#ffb767',
-        'sprint' => '#8C8C8C',
-        'stabilization' => '#bc0000'
+        'sprint' => '#e6e6e6',
+        'stabilization' => '#983030'
     ];
 
     /**
@@ -202,7 +202,7 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
         $this->pageRenderer->addJsLibrary('amcharts_gantt', 'https://www.amcharts.com/lib/3/gantt.js');
         $this->pageRenderer->addJsLibrary('amcharts_lightheme', 'https://www.amcharts.com/lib/3/themes/light.js');
         $this->pageRenderer->addJsLibrary('amcharts_export', 'https://www.amcharts.com/lib/3/plugins/export/export.js');
-        $this->pageRenderer->addCssFile('https://www.amcharts.com/lib/3/plugins/export/export.css');
+//        $this->pageRenderer->addCssFile('https://www.amcharts.com/lib/3/plugins/export/export.css');
 
         $data = $this->generateChartArray($majorVersions);
         $this->view->assign('data', $data);
@@ -212,7 +212,7 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
 		var chart = AmCharts.makeChart("charts", {
 			"type": "gantt",
 			"theme": "light",
-			"marginRight": 70,
+//			"marginRight": 70,
 			"period": "YYYY",
 			"dataDateFormat": "YYYY-MM-DD",
 			"columnWidth": 0.65,
@@ -245,9 +245,9 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
 			"startDateField": "start",
 			"endDateField": "end",
 			"dataProvider": ' . json_encode($data) . ',
-			"valueScrollbar": {
-				"autoGridCount": true
-			},
+//			"valueScrollbar": {
+//				"autoGridCount": true
+//			},
 			"chartCursor": {
 				"cursorColor": "#55bb76",
 				"valueBalloonsEnabled": false,
@@ -259,7 +259,13 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
 				"valueZoomable": true
 			},
 			"export": {
-				"enabled": true
+				"enabled": true,
+				"divId": "exportContainer",
+                "position": "bottom-right",
+                "fileName": "typo3-support-times",
+				"menu": [
+				    "PNG","PDF", "SVG"
+				]
 			}
 		});
         ';
@@ -347,31 +353,12 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
                     'start' => $this->dateFromTimestamp($majorVersion['prioritysupport']),
                     'end' => $this->dateFromTimestamp($majorVersion['extendedsupport']),
                     'color' => $this->colors['elts'],
-                    'task' => 'Extended support'
+                    'task' => 'Extended support (optional)'
                 ];
             }
         }
 
         return $data;
-    }
-
-    /**
-     * @param array $allVersions
-     * @param array $majorVersions
-     * @return string
-     *
-     * @deprecated Not used anymore
-     */
-    protected function renderPHPCompatibilityMatrix(array $allVersions, array $majorVersions)
-    {
-        $content = '<table border="1">';
-        $content .= '<tr>';
-        foreach ($allVersions as $index => $allVersion) {
-            $content .= '<td>' . $allVersion['version'] . '</td>';
-        }
-        $content .= '</tr>';
-        $content .= '</table>';
-        return $content;
     }
 
     /**
