@@ -46,13 +46,13 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
      *
      * @var array
      */
-    protected $colors = [
+    protected $colors = array(
         'regular' => '#69A550',
         'security' => '#FF8700',
         'elts' => '#ffb767',
         'sprint' => '#e6e6e6',
         'stabilization' => '#983030'
-    ];
+    );
 
     /**
      * @var t3lib_DB
@@ -188,7 +188,7 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
             'uid'
         );
         if ($rows === null) {
-            return [];
+            return array();
         }
 
         return $rows;
@@ -299,7 +299,7 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
      */
     protected function generateChartArray(array $majorVersions)
     {
-        $data = [];
+        $data = array();
         foreach ($majorVersions as $index => $majorVersion) {
             $firstStart = (int)$majorVersion['developmentstart'];
             $data[$index]['version'] = $majorVersion['title'];
@@ -320,20 +320,20 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
                 }
 
                 //Sprint Segment
-                $data[$index]['segments'][] = [
+                $data[$index]['segments'][] = array(
                     'start' => $this->dateFromTimestamp($sprintStart),
                     'end' => $this->dateFromTimestamp($realDate - 1209600),
                     'color' => $this->colors['sprint'],
                     'task' => 'Sprint Phase ' . $minorVersion['version']
-                ];
+                );
 
                 //Stabilization Segment
-                $data[$index]['segments'][] = [
+                $data[$index]['segments'][] = array(
                     'start' => $this->dateFromTimestamp($realDate - 1209600),
                     'end' => $this->dateFromTimestamp($realDate),
                     'color' => $this->colors['stabilization'],
                     'task' => 'Stabilization Phase ' . $minorVersion['version']
-                ];
+                );
                 // Set the last release date as start of maintenance
                 $firstStart = $realDate;
             }
@@ -341,27 +341,27 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
              * Set Maintenance Times
              */
             // Regular Maintenance
-            $data[$index]['segments'][] = [
+            $data[$index]['segments'][] = array(
                 'start' => $this->dateFromTimestamp($firstStart),
                 'end' => $this->dateFromTimestamp($majorVersion['regularsupport']),
                 'color' => $this->colors['regular'],
                 'task' => 'Regular Maintenance'
-            ];
+            );
             // Security Maintenance
-            $data[$index]['segments'][] = [
+            $data[$index]['segments'][] = array(
                 'start' => $this->dateFromTimestamp($majorVersion['regularsupport']),
                 'end' => $this->dateFromTimestamp($majorVersion['prioritysupport']),
                 'color' => $this->colors['security'],
                 'task' => 'Priority bugfixes'
-            ];
+            );
             // ELTS Maintenance
             if ($majorVersion['extendedsupport'] > 0) {
-                $data[$index]['segments'][] = [
+                $data[$index]['segments'][] = array(
                     'start' => $this->dateFromTimestamp($majorVersion['prioritysupport']),
                     'end' => $this->dateFromTimestamp($majorVersion['extendedsupport']),
                     'color' => $this->colors['elts'],
                     'task' => 'Extended support (optional)'
-                ];
+                );
             }
         }
 
