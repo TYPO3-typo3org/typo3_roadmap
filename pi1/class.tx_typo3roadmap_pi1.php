@@ -153,6 +153,7 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
 
     /**
      * @param int $majorVersion
+     *
      * @return array
      */
     protected function getSupportedPHPVersions($majorVersion)
@@ -161,12 +162,14 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
             'uid, version',
             'tx_typo3roadmap_majorversion_phpversions_mm
   INNER JOIN tx_typo3roadmap_phpversion ON tx_typo3roadmap_phpversion.uid = tx_typo3roadmap_majorversion_phpversions_mm.uid_foreign',
-        'tx_typo3roadmap_majorversion_phpversions_mm.uid_local = '.(int)$majorVersion . $this->cObj->enableFields('tx_typo3roadmap_phpversion'),
+            'tx_typo3roadmap_majorversion_phpversions_mm.uid_local = ' . (int)$majorVersion .
+            $this->cObj->enableFields('tx_typo3roadmap_phpversion'),
             '',
             '',
             '',
             'uid'
         );
+
         return $rows;
     }
 
@@ -184,9 +187,10 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
             '',
             'uid'
         );
-        if($rows === null) {
+        if ($rows === null) {
             return [];
         }
+
         return $rows;
     }
 
@@ -309,8 +313,10 @@ class tx_typo3roadmap_pi1 extends tslib_pibase
                 if ($minorIndex === 0) {
                     $sprintStart = $firstStart = (int)$majorVersion['developmentstart'];
                 } else {
-                    //@todo check correct field
-                    $sprintStart = $majorVersion['minorversions'][$minorIndex-1]['estimated'];
+                    $sprintStart = $majorVersion['minorversions'][$minorIndex - 1]['estimated'];
+                    if ((int)$majorVersion['minorversions'][$minorIndex - 1]['released'] >= (int)$majorVersion['minorversions'][$minorIndex - 1]['estimated']) {
+                        $sprintStart = (int)$majorVersion['minorversions'][$minorIndex - 1]['released'];
+                    }
                 }
 
                 //Sprint Segment
