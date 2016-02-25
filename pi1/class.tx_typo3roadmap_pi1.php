@@ -22,6 +22,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+require_once(PATH_tslib . 'class.tslib_pibase.php');
+
 /**
  * Plugin 'TYPO3 Roadmap' for the 'typo3_roadmap' extension.
  *
